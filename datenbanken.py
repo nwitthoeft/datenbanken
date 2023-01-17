@@ -3,6 +3,9 @@ import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
 from IPython.display import display
+import geopandas as gpd
+import matplotlib.pyplot as plt
+import folium
 
 df1 = pd.read_excel('https://figshare.com/ndownloader/files/2364328')
 df2 = pd.read_excel('https://figshare.com/ndownloader/files/2364329')
@@ -22,8 +25,9 @@ new_df_Th_232_std_div_coloumn_name = "Th 232 standard deviation"
 new_df_K_40_value_coloumn_name = "K 40 Value"
 new_df_K_40_std_div_coloumn_name = "K 40 standard deviation"
 
-column_name_arr = ["Cement Sample", "Fly ash Sample", "Ra 226 Value", "Ra 226 standard deviation",
+column_name_arr = ["Ra 226 Value", "Ra 226 standard deviation",
                    "Th 232 Value", "Th 232 standard deviation", "K 40 Value", "K 40 standard deviation"]
+sample_name_arr = ["Cement Sample", "Fly ash Sample"]
 
 
 def data_filter(data, column_index_string):
@@ -73,13 +77,13 @@ def create_dataframe(column_type_name, row_type_arr, Ra_226_column_name_val_arr,
 '''
 
 
-def create_dataframe1(column_name_arr, row_type_arr, Ra_226_val_arr, Ra_226_std_dev_arr, Th_232_val_arr, Th_232_std_dev_arr, K_40_val_arr, K_40_std_dev_arr):
+def create_dataframe1(sample_name, column_name_arr, row_type_arr, Ra_226_val_arr, Ra_226_std_dev_arr, Th_232_val_arr, Th_232_std_dev_arr, K_40_val_arr, K_40_std_dev_arr):
     # np_arr = np.asarray(val_arr)
     # df = pd.DataFrame(np_arr,
     # columns=[column_name_val_arr])
     # initialize data of lists.
-    data = {column_name_arr[0]: row_type_arr, column_name_arr[2]: Ra_226_val_arr, column_name_arr[3]: Ra_226_std_dev_arr, column_name_arr[4]
-        : Th_232_val_arr, column_name_arr[5]: Th_232_std_dev_arr, column_name_arr[6]: K_40_val_arr, column_name_arr[7]: K_40_std_dev_arr}
+    data = {sample_name: row_type_arr, column_name_arr[0]: Ra_226_val_arr, column_name_arr[1]: Ra_226_std_dev_arr, column_name_arr[2]
+        : Th_232_val_arr, column_name_arr[3]: Th_232_std_dev_arr, column_name_arr[4]: K_40_val_arr, column_name_arr[5]: K_40_std_dev_arr}
     new_df = pd.DataFrame(data)
     new_df = new_df.reset_index(drop=True)
     display(new_df)
@@ -87,17 +91,25 @@ def create_dataframe1(column_name_arr, row_type_arr, Ra_226_val_arr, Ra_226_std_
 
 
 error1_vektor_cement_Ra_226 = error_filter(df1[2:9], column_Ra_226)
+error1_vektor_cement_Ra_226.append(round((sum(error1_vektor_cement_Ra_226)/len(error1_vektor_cement_Ra_226)), 1))
 error2_vektor_cement_Th_232 = error_filter(df1[2:9], column_Th_232)
+error2_vektor_cement_Th_232.append(round((sum(error2_vektor_cement_Th_232)/len(error2_vektor_cement_Th_232)), 1))
 error3_vektor_cement_K_40 = error_filter(df1[2:9], column_K_40)
+error3_vektor_cement_K_40.append(round((sum(error3_vektor_cement_K_40)/len(error3_vektor_cement_K_40)), 1))
 # print(best_ranking(df1[2:9]))
 # chart = sns.barplot(data = df1, x= df1[2:9]['<b> Sample</b>'],  y = data_filter(df1[2:9]), errorbar=None)
-
+add_row = pd.Series(["AM±SD"])
 x_cement = df1[2:9][column_sample_type]
-y_cement_Ra_226 = data_filter(df1[2:9], column_Ra_226)
-y_cement_Th_232 = data_filter(df1[2:9], column_Th_232)
-y_cement_K_40 = data_filter(df1[2:9], column_K_40)
+x_cement = pd.concat([x_cement, add_row], ignore_index=True)
 
-cement_df = create_dataframe1(column_name_arr, x_cement,  y_cement_Ra_226, error1_vektor_cement_Ra_226,
+y_cement_Ra_226 = data_filter(df1[2:9], column_Ra_226)
+y_cement_Ra_226.append(round((sum(y_cement_Ra_226)/len(y_cement_Ra_226)), 1))
+y_cement_Th_232 = data_filter(df1[2:9], column_Th_232)
+y_cement_Th_232.append(round((sum(y_cement_Th_232)/len(y_cement_Th_232)), 1))
+y_cement_K_40 = data_filter(df1[2:9], column_K_40)
+y_cement_K_40.append(round((sum(y_cement_K_40)/len(y_cement_K_40)), 1))
+
+cement_df = create_dataframe1(sample_name_arr[0], column_name_arr, x_cement,  y_cement_Ra_226, error1_vektor_cement_Ra_226,
                               y_cement_Th_232, error2_vektor_cement_Th_232, y_cement_K_40, error3_vektor_cement_K_40)
 
 fig, ax = plt.subplots(3)
@@ -127,17 +139,30 @@ plt.savefig('figure.png', dpi=300)
 
 
 error1_vektor_fly_ash_Ra_226 = error_filter(df1[11:16], column_Ra_226)
+error1_vektor_fly_ash_Ra_226.append(
+    round((sum(error1_vektor_fly_ash_Ra_226)/len(error1_vektor_fly_ash_Ra_226)), 1))
 error2_vektor_fly_ash_Th_232 = error_filter(df1[11:16], column_Th_232)
+error2_vektor_fly_ash_Th_232.append(
+    round((sum(error2_vektor_fly_ash_Th_232)/len(error2_vektor_fly_ash_Th_232)), 1))
 error3_vektor_fly_ash_K_40 = error_filter(df1[11:16], column_K_40)
+error3_vektor_fly_ash_K_40.append(
+    round((sum(error3_vektor_fly_ash_K_40)/len(error3_vektor_fly_ash_K_40)), 1))
 # print(best_ranking(df1[2:9]))
 # chart = sns.barplot(data = df1, x= df1[2:9]['<b> Sample</b>'],  y = data_filter(df1[2:9]), errorbar=None)
 
 x_fly_ash = df1[11:16][column_sample_type]
-y_fly_ash_Ra_226 = data_filter(df1[11:16], column_Ra_226)
-y_fly_ash_Th_232 = data_filter(df1[11:16], column_Th_232)
-y_fly_ash_K_40 = data_filter(df1[11:16], column_K_40)
+x_fly_ash = pd.concat([x_fly_ash, add_row], ignore_index=True)
 
-fly_ash_df = create_dataframe1(column_name_arr, x_fly_ash,  y_fly_ash_Ra_226, error1_vektor_fly_ash_Ra_226,
+y_fly_ash_Ra_226 = data_filter(df1[11:16], column_Ra_226)
+y_fly_ash_Ra_226.append(
+    round((sum(y_fly_ash_Ra_226)/len(y_fly_ash_Ra_226)), 1))
+y_fly_ash_Th_232 = data_filter(df1[11:16], column_Th_232)
+y_fly_ash_Th_232.append(
+    round((sum(y_fly_ash_Th_232)/len(y_fly_ash_Th_232)), 1))
+y_fly_ash_K_40 = data_filter(df1[11:16], column_K_40)
+y_fly_ash_K_40.append(round((sum(y_fly_ash_K_40)/len(y_fly_ash_K_40)), 1))
+
+fly_ash_df = create_dataframe1(sample_name_arr[1], column_name_arr, x_fly_ash,  y_fly_ash_Ra_226, error1_vektor_fly_ash_Ra_226,
                                y_fly_ash_Th_232, error2_vektor_fly_ash_Th_232, y_fly_ash_K_40, error3_vektor_fly_ash_K_40)
 
 fig, ax = plt.subplots(3)

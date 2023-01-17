@@ -191,6 +191,9 @@ plt.subplots_adjust(left=0.1, bottom=0.1, right=0.9,
 fig.set_size_inches(8, 16)
 fig.suptitle('fly ash')
 plt.savefig('figure1.png', dpi=300)
+
 # create_dataframe(new_df_cement_sample_coloumn_name, x_cement, new_df_Ra_226_value_coloumn_name, y_cement_Ra_226, new_df_Ra_226_std_div_coloumn_name, error1_vektor_cement_Ra_226)
-pie_fig = plt.pie(cement_df.loc[8], labels = ['Ra_226','Th_232','K_40'])
+pie_fig, ax = plt.subplots(1)
+ax = plt.pie(cement_df.loc[7,["Ra 226 Value", "Th 232 Value", "K 40 Value"]], labels = ['Ra_226','Th_232','K_40'])
+plt.savefig('figure2.png', dpi=300)
 plt.show()

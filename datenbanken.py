@@ -122,8 +122,7 @@ def create_dataframe1(sample_name, column_name_arr, row_type_arr, Ra_226_val_arr
     # df = pd.DataFrame(np_arr,
     # columns=[column_name_val_arr])
     # initialize data of lists.
-    data = {sample_name: row_type_arr, column_name_arr[0]: Ra_226_val_arr, column_name_arr[1]: Ra_226_std_dev_arr, column_name_arr[2]
-        : Th_232_val_arr, column_name_arr[3]: Th_232_std_dev_arr, column_name_arr[4]: K_40_val_arr, column_name_arr[5]: K_40_std_dev_arr}
+    data = {sample_name: row_type_arr, column_name_arr[0]: Ra_226_val_arr, column_name_arr[1]: Ra_226_std_dev_arr, column_name_arr[2]            : Th_232_val_arr, column_name_arr[3]: Th_232_std_dev_arr, column_name_arr[4]: K_40_val_arr, column_name_arr[5]: K_40_std_dev_arr}
     new_df = pd.DataFrame(data)
     new_df = new_df.reset_index(drop=True)
     display(new_df)
@@ -162,19 +161,19 @@ cement_df = create_dataframe1(sample_name_arr_df1[0], column_name_arr_df1, x_cem
 
 fig, ax = plt.subplots(3)
 cement_Ra_226_bar = ax[0].bar(x_cement, y_cement_Ra_226, yerr=error1_vektor_cement_Ra_226,
-          align='center', alpha=0.5, ecolor='black', capsize=10)
+                              align='center', alpha=0.5, ecolor='black', capsize=10)
 ax[0].set_ylabel("Ra 226 in Bq/kg")
 ax[0].set_xlabel("cement type")
 ax[0].set_title('Radioactive concetration of Ra 226 in different cement types')
 
 cement_Th_232_bar = ax[1].bar(x_cement, y_cement_Th_232, yerr=error2_vektor_cement_Th_232,
-          align='center', alpha=0.5, ecolor='black', capsize=10)
+                              align='center', alpha=0.5, ecolor='black', capsize=10)
 ax[1].set_ylabel("Th 232 in Bq/kg")
 ax[1].set_xlabel("cement type")
 ax[1].set_title('Radioactive concetration of Th 232 in different cement types')
 
 cement_K_40_bar = ax[2].bar(x_cement, y_cement_K_40, yerr=error3_vektor_cement_K_40,
-          align='center', alpha=0.5, ecolor='black', capsize=10)
+                            align='center', alpha=0.5, ecolor='black', capsize=10)
 ax[2].set_ylabel("K 40 in Bq/kg")
 ax[2].set_xlabel("cement type")
 ax[2].set_title('Radioactive concetration of K 40 in different cement types')
@@ -219,21 +218,21 @@ fly_ash_df = create_dataframe1(sample_name_arr_df1[1], column_name_arr_df1, x_fl
 
 fig1, ax = plt.subplots(3)
 fly_ash_Ra_226_bar = ax[0].bar(x_fly_ash, y_fly_ash_Ra_226, yerr=error1_vektor_fly_ash_Ra_226,
-                                align='center', alpha=0.5, ecolor='black', capsize=10)
+                               align='center', alpha=0.5, ecolor='black', capsize=10)
 ax[0].set_ylabel("Ra 226 in Bq/kg")
 ax[0].set_xlabel("fly ash type")
 ax[0].set_title(
     'Radioactive concetration of Ra 226 in different fly ash types')
 
 fly_ash_Th_232_bar = ax[1].bar(x_fly_ash, y_fly_ash_Th_232, yerr=error2_vektor_fly_ash_Th_232,
-                                align='center', alpha=0.5, ecolor='black', capsize=10)
+                               align='center', alpha=0.5, ecolor='black', capsize=10)
 ax[1].set_ylabel("Th 232 in Bq/kg")
 ax[1].set_xlabel("fly ash type")
 ax[1].set_title(
     'Radioactive concetration of Th 232 in different fly ash types')
 
 fly_ash_K_40_bar = ax[2].bar(x_fly_ash, y_fly_ash_K_40, yerr=error3_vektor_fly_ash_K_40,
-                              align='center', alpha=0.5, ecolor='black', capsize=10)
+                             align='center', alpha=0.5, ecolor='black', capsize=10)
 ax[2].set_ylabel("K 40 in Bq/kg")
 ax[2].set_xlabel("fly ash type")
 ax[2].set_title('Radioactive concetration of K 40 in different fly ash types')
@@ -281,11 +280,11 @@ width = 0.35
 cement_bar_1 = ax.bar(x_cement_label - width/2, b_threshold_Hex,
                       width,  color='lime', align='center', alpha=0.5, label='Hex')
 cement_bar_2 = ax.bar(x_cement_label - width/2, a_threshold_Hex, width, yerr=y_cement_H_ex_error,
-                      color='orange', align='center', alpha=0.5, capsize=10, bottom=b_threshold_Hex)
+                      color='orange', align='center', alpha=0.5, capsize=5, bottom=b_threshold_Hex)
 cement_bar_3 = ax.bar(x_cement_label + width/2, b_threshold_Hin,
                       width,  color='green', align='center', alpha=0.5, label='Hin')
 cement_bar_4 = ax.bar(x_cement_label + width/2, a_threshold_Hin, width, yerr=y_cement_H_in_error,
-                      color='red', align='center', alpha=0.5, capsize=10, bottom=b_threshold_Hin)
+                      color='red', align='center', alpha=0.5, capsize=5, bottom=b_threshold_Hin)
 
 plt.axhline(threshold, color='black', ls='solid')
 
@@ -329,11 +328,11 @@ width = 0.35
 fly_ash_bar_1 = ax.bar(x_fly_ash_label - width/2, b_threshold_Hex,
                        width, color='lime', align='center', alpha=0.5, label='Hex')
 fly_ash_bar_2 = ax.bar(x_fly_ash_label - width/2, a_threshold_Hex, width, yerr=y_fly_ash_H_ex_error,
-                       color='orange', alpha=0.5,  ecolor='black', capsize=10, bottom=b_threshold_Hex)
+                       color='orange', alpha=0.5,  ecolor='black', capsize=5, bottom=b_threshold_Hex)
 fly_ash_bar_3 = ax.bar(x_fly_ash_label + width/2, b_threshold_Hin,
                        width, color='green', align='center', alpha=0.5,  label='Hin')
 fly_ash_bar_4 = ax.bar(x_fly_ash_label + width/2, a_threshold_Hin, width, yerr=y_fly_ash_H_in_error,
-                       color='red', alpha=0.5, ecolor='black', capsize=10, bottom=b_threshold_Hin)
+                       color='red', alpha=0.5, ecolor='black', capsize=5, bottom=b_threshold_Hin)
 
 plt.axhline(threshold, color='black', ls='solid')
 

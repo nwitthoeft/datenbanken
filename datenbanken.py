@@ -61,6 +61,16 @@ column_name_arr_df3 = ['Ra 226 Value', 'Ra 226 standard deviation',
 sample_name_arr_df3 = ['Countries']
 
 
+'''
+Beschreibung: Diese Funktion ließt Daten aus einem Vektor aus einem Datenframe ein.
+Dabei hat jedes Element des Vektors die Informationen über den Hauptwert der Messung und die Standartabweichung. 
+Diese Funktion filtert den Hauptwert aus dem Element raus und speichrt alle die Werte in einem Vektor.
+Außerdem werden Zeilen gelöscht aus dem zugehörigen Datensatz gelöscht wenn das Element aus der Zeile nicht verwendet wird.
+Parameter: data (daten vektor) ,column_index_string (spalten Name), df (dataframe)
+Rückgabewert: datenvektor mit den gefilterten Daten (hauptwerte)
+'''
+
+
 def data_filter(data, column_index_string, df):
     # Write your solution here and remove pass
     str1 = ""
@@ -82,6 +92,16 @@ def data_filter(data, column_index_string, df):
             data1.append(float(str2))
             str2 = ""
     return (data1)
+
+
+'''
+Beschreibung: Diese Funktion ließt Daten aus einem Vektor aus einem Datenframe ein.
+Dabei hat jedes Element des Vektors die Informationen über den Hauptwert der Messung und die Standartabweichung. 
+Diese Funktion filtert den Hauptwert aus dem Element raus und speichrt alle die Werte in einem Vektor.
+Außerdem werden Zeilen gelöscht aus dem zugehörigen Datensatz gelöscht wenn das Element aus der Zeile nicht verwendet wird.
+Parameter: data (daten vektor) ,column_index_string (spalten Name), df (dataframe)
+Rückgabewert: datenvektor mit den gefilterten Daten (Hauptwerte), Dateframe ohne fehlerhaften Datenzeilen.
+'''
 
 
 def data_filter2(data, column_index_string, df):
@@ -106,20 +126,11 @@ def data_filter2(data, column_index_string, df):
 
 
 '''
-def error_filter(data, column_index_string):
-    # Write your solution here and remove pass
-    str1 = ""
-    str2 = ""
-    error1 = []
-    for element in data.index:
-        str1 = data.loc[element, column_index_string]
-        for i in range(len(str1)-1, 0, -1):  # reverse
-            if (str1[i] == "±"):
-                break
-            str2 += str1[i]
-        error1.append(float(str2[::-1]))
-        str2 = ""
-    return (error1)
+Beschreibung: Diese Funktion ließt Daten aus einem Vektor aus einem Datenframe ein.
+Dabei hat jedes Element des Vektors die Informationen über den Hauptwert der Messung und die Standartabweichung. 
+Diese Funktion filtert den Standartabweichung aus dem Element raus und speichrt alle die Werte in einem Vektor.
+Parameter: data (daten vektor) ,column_index_string (spalten Name)
+Rückgabewert: datenvektor mit den gefilterten Daten (Standartabweichungen)
 '''
 
 
@@ -147,25 +158,13 @@ def error_filter(data, column_index_string):
 
 
 '''
-def create_dataframe(column_type_name, row_type_arr, Ra_226_column_name_val_arr, Ra_226_val_arr, Ra_226_column_name_std_dev_arr, Ra_226_std_dev_arr):
-    # np_arr = np.asarray(val_arr)
-    # df = pd.DataFrame(np_arr,
-    # columns=[column_name_val_arr])
-    # initialize data of lists.
-    data = {column_type_name: row_type_arr,
-            Ra_226_column_name_val_arr: Ra_226_val_arr, Ra_226_column_name_std_dev_arr: Ra_226_std_dev_arr}
-    new_df = pd.DataFrame(data)
-    new_df = new_df.reset_index(drop=True)
-    display(new_df)
-    return ()
+Beschreibung: Diese Funktion baut aus den Gefilterten Datenvektoren ein neues Dataframe. Dieser Dataframe kann verwendet werden um Grafiken zu erstellen. Dabei bezeiht sich die Funktion auf die das erste Dataframe df1.
+Parameter: sample_name (Die Bezeichung der Daten), column_name_arr (Spalten Namen), row_type_arr (Zeilen Namen), Ra_226_val_arr (Hauptwerte Vektor für Ra 226), Ra_226_std_dev_arr (Standartabweichung Vektor für Ra 226), Th_232_val_arr (Hauptwerte Vektor für Th 232), Th_232_std_dev_arr (Standartabweichung Vektor für Th 232), K_40_val_arr (Hauptwerte Vektor für K 40), K_40_std_dev_arr (Standartabweichung Vektor für K 40)
+Rückgabewert: neuer Datenframe
 '''
 
 
 def create_dataframe1(sample_name, column_name_arr, row_type_arr, Ra_226_val_arr, Ra_226_std_dev_arr, Th_232_val_arr, Th_232_std_dev_arr, K_40_val_arr, K_40_std_dev_arr):
-    # np_arr = np.asarray(val_arr)
-    # df = pd.DataFrame(np_arr,
-    # columns=[column_name_val_arr])
-    # initialize data of lists.
     data = {sample_name: row_type_arr, column_name_arr[0]: Ra_226_val_arr, column_name_arr[1]: Ra_226_std_dev_arr, column_name_arr[2]
         : Th_232_val_arr, column_name_arr[3]: Th_232_std_dev_arr, column_name_arr[4]: K_40_val_arr, column_name_arr[5]: K_40_std_dev_arr}
     new_df = pd.DataFrame(data)
@@ -174,11 +173,25 @@ def create_dataframe1(sample_name, column_name_arr, row_type_arr, Ra_226_val_arr
     return (new_df)
 
 
+'''
+Beschreibung: Diese Funktion baut aus den Gefilterten Datenvektoren ein neues Dataframe. Dieser Dataframe kann verwendet werden um Grafiken zu erstellen. Dabei bezeiht sich die Funktion auf die das zweiten Dataframe df2.
+Parameter: sample_name (Die Bezeichung der Daten), column_name_arr_df2 (Spalten Namen), row_type_arr (Zeilen Namen), y_H_ex (Hauptwerte Vektor für H ex), y_H_ex_error (Standartabweichung Vektor für H ex), y_H_in (Hauptwerte Vektor für H in), y_H_in_error (Standartabweichung Vektor für H in)
+Rückgabewert: neuer Datenframe
+'''
+
+
 def create_dataframe2(sample_name, column_name_arr_df2, row_type_arr, y_H_ex, y_H_ex_error, y_H_in, y_H_in_error):
     data = {sample_name: row_type_arr, column_name_arr_df2[0]: y_H_ex, column_name_arr_df2[1]: y_H_ex_error, column_name_arr_df2[2]: y_H_in, column_name_arr_df2[3]: y_H_in_error}
     new_df = pd.DataFrame(data)
     new_df = new_df.reset_index(drop=True)
     return ()
+
+
+'''
+Beschreibung: Diese Funktion baut aus den Gefilterten Datenvektoren ein neues Dataframe. Dieser Dataframe kann verwendet werden um Grafiken zu erstellen. Dabei bezeiht sich die Funktion auf die das dritte Dataframe df3.
+Parameter: sample_name (Die Bezeichung der Daten), column_name_arr_df3 (Spalten Namen), row_type_arr (Zeilen Namen), Ra_226_val_arr (Hauptwerte Vektor für Ra 226), Ra_226_std_dev_arr (Standartabweichung Vektor für Ra 226), Th_232_val_arr (Hauptwerte Vektor für Th 232), Th_232_std_dev_arr (Standartabweichung Vektor für Th 232), K_40_val_arr (Hauptwerte Vektor für K 40), K_40_std_dev_arr (Standartabweichung Vektor für K 40)
+Rückgabewert: neuer Datenframe
+'''
 
 
 def create_dataframe3(sample_name, column_name_arr_df3, row_type_arr, Ra_226_val_arr, Ra_226_std_dev_arr, Th_232_val_arr, Th_232_std_dev_arr, K_40_val_arr, K_40_std_dev_arr):
@@ -193,9 +206,23 @@ def create_dataframe3(sample_name, column_name_arr_df3, row_type_arr, Ra_226_val
     return (new_df)
 
 
+'''
+Beschreibung: Kalkulation für Ra eq
+Parameter: A_Ra, A_Th, A_K
+Rückgabewert: Ra eq
+'''
+
+
 def calc_Ra_eq(A_Ra, A_Th, A_K):
     Ra_eq = 370*((A_Ra/370) + (A_Th/259) + (A_K/4810))
     return (Ra_eq)
+
+
+'''
+Beschreibung: Kalkulation für Ra eq vektor
+Parameter: df, column_1, column_2, column_3, index_lower, index_upper
+Rückgabewert: Ra eq vektor
+'''
 
 
 def get_Ra_eq_arr(df, column_1, column_2, column_3, index_lower, index_upper):

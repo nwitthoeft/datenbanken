@@ -485,7 +485,7 @@ ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
 plt.xlabel("Ra eq. in Bq/kg")
 plt.ylabel("Countries")
-sort_country_plot.set_size_inches(16, 4)
+sort_country_plot.set_size_inches(16, 6)
 sort_country_plot.savefig("figure5", dpi=300)
 
 plt.show()

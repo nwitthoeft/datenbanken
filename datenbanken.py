@@ -233,6 +233,7 @@ def get_Ra_eq_arr(df, column_1, column_2, column_3, index_lower, index_upper):
     return (Ra_eq_arr)
 
 
+# ---------------------------------------df1 cement types Plot ----------------------------------------------------------------------
 error1_vektor_cement_Ra_226 = error_filter(df1[2:9], column_Ra_226_df1)
 error1_vektor_cement_Ra_226.append(
     round((sum(error1_vektor_cement_Ra_226)/len(error1_vektor_cement_Ra_226)), 1))
@@ -293,6 +294,7 @@ fig.set_size_inches(8, 16)
 fig.suptitle('cement')
 fig.savefig('figure.png', dpi=300)
 
+# ---------------------------------------df1 fyl ash type Plot ----------------------------------------------------------------------
 
 error1_vektor_fly_ash_Ra_226 = error_filter(df1[11:16], column_Ra_226_df1)
 error1_vektor_fly_ash_Ra_226.append(
@@ -303,8 +305,7 @@ error2_vektor_fly_ash_Th_232.append(
 error3_vektor_fly_ash_K_40 = error_filter(df1[11:16], column_K_40)
 error3_vektor_fly_ash_K_40.append(
     round((sum(error3_vektor_fly_ash_K_40)/len(error3_vektor_fly_ash_K_40)), 1))
-# print(best_ranking(df1[2:9]))
-# chart = sns.barplot(data = df1, x= df1[2:9]['<b> Sample</b>'],  y = data_filter(df1[2:9]), errorbar=None)
+
 
 x_fly_ash = df1[11:16][column_sample_type]
 x_fly_ash = pd.concat([x_fly_ash, add_row], ignore_index=True)
@@ -358,7 +359,8 @@ fig1.set_size_inches(8, 16)
 fig1.suptitle('fly ash')
 fig1.savefig('figure1.png', dpi=300)
 
-# create_dataframe(new_df_cement_sample_coloumn_name, x_cement, new_df_Ra_226_value_coloumn_name, y_cement_Ra_226, new_df_Ra_226_std_div_coloumn_name, error1_vektor_cement_Ra_226)
+# ---------------------------------------df2 Hazard Plot Cement ----------------------------------------------------------------------
+
 pie_fig, ax = plt.subplots(1)
 ax = plt.pie(cement_df.loc[7, ["Ra 226 Value", "Th 232 Value", "K 40 Value"]], labels=[
              'Ra_226', 'Th_232', 'K_40'])
@@ -418,7 +420,8 @@ plt.tight_layout()
 
 threshold_fig_cement.savefig("figure3")
 
-# fly ash
+# ---------------------------------------df2 Hazard Plot fly ash ----------------------------------------------------------------------
+
 y_fly_ash_H_ex = data_filter(df2[11:17], column_H_ex, df2)
 y_fly_ash_H_ex_error = error_filter(df2[11:17], column_H_ex)
 y_fly_ash_H_in = data_filter(df2[11:17], column_H_in, df2)
@@ -472,7 +475,8 @@ ax.bar_label(fly_ash_bar_4, padding=3)
 
 threshold_fig_fly_ash.tight_layout()
 threshold_fig_fly_ash.savefig("figure4")
-# df3
+
+# ---------------------------------------df3 Ra_eq Country Ranking Cement ----------------------------------------------------------------------
 
 index_upper = 19
 index_lower = 2
